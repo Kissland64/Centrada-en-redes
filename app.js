@@ -1,7 +1,7 @@
 const playerApiUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('http://nbainsightsoriginal.somee.com/api/Jugador');
 const teamApiUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('http://nbainsightsoriginal.somee.com/api/Equipo');
 let allPlayers = []; 
-let allTeams = []; 
+let allTeams = [];  
 
 async function getPlayers() {
     try {
@@ -10,6 +10,9 @@ async function getPlayers() {
             throw new Error(`Error HTTP! Estado: ${response.status}`);
         }
         const data = await response.json();
+        
+        console.log("Datos recibidos de jugadores: ", data.contents);
+        
         const players = JSON.parse(data.contents);
         return players;
     } catch (error) {
@@ -24,6 +27,9 @@ async function getTeams() {
             throw new Error(`Error HTTP! Estado: ${response.status}`);
         }
         const data = await response.json();
+        
+        console.log("Datos recibidos de equipos: ", data.contents);
+        
         const teams = JSON.parse(data.contents);
         return teams;
     } catch (error) {
@@ -41,6 +47,9 @@ async function displayPlayersAndTeams() {
     const players = await getPlayers();
     const teams = await getTeams();
     
+    console.log("Jugadores cargados: ", players);
+    console.log("Equipos cargados: ", teams);
+
     allPlayers = players;
     allTeams = teams; 
 
@@ -58,11 +67,11 @@ async function displayPlayersAndTeams() {
                 <img src="${team && team.imagen ? team.imagen : 'https://via.placeholder.com/150'}" alt="Logo de ${team ? team.nombre : 'Desconocido'}">
                 <h2>${player.nombre}</h2>
                 <p><strong>Posición:</strong> ${player.posicion}</p>
-                <p><strong>Puntos por partido:</strong> ${player.puntosPorPartido}</p>
-                <p><strong>Asistencias por partido:</strong> ${player.asistenciasPorPartido}</p>
-                <p><strong>Rebotes por partido:</strong> ${player.rebotesPorPartido}</p>
-                <p><strong>Bloqueos por partido:</strong> ${player.bloqueosPorPartido}</p>
-                <p><strong>Robos por partido:</strong> ${player.robosPorPartido}</p>
+                <p><strong>Puntos por partido:</strong> ${player.puntosporPartido}</p>
+                <p><strong>Asistencias por partido:</strong> ${player.asistenciasporPartido}</p>
+                <p><strong>Rebotes por partido:</strong> ${player.rebotesporPartido}</p>
+                <p><strong>Bloqueos por partido:</strong> ${player.bloqueosporPartido}</p>
+                <p><strong>Robos por partido:</strong> ${player.robosporPartido}</p>
                 <p><strong>Equipo:</strong> ${team ? team.nombre : 'Desconocido'}</p>
                 <p><strong>Conferencia:</strong> ${team ? team.conferencia : 'Desconocida'}</p>
             `;
@@ -105,17 +114,17 @@ function filterPlayers(searchTerm) {
             const playerCard = document.createElement('div');
             playerCard.classList.add('player-card');
 
-            const team = allTeams.find(t => t.equipoId === player.equipoId); 
+            const team = allTeams.find(t => t.equipoId === player.equipoId);
 
             playerCard.innerHTML = `
                 <img src="${team && team.imagen ? team.imagen : 'https://via.placeholder.com/150'}" alt="Logo de ${team ? team.nombre : 'Desconocido'}">
                 <h2>${player.nombre}</h2>
                 <p><strong>Posición:</strong> ${player.posicion}</p>
-                <p><strong>Puntos por partido:</strong> ${player.puntosPorPartido}</p>
-                <p><strong>Asistencias por partido:</strong> ${player.asistenciasPorPartido}</p>
-                <p><strong>Rebotes por partido:</strong> ${player.rebotesPorPartido}</p>
-                <p><strong>Bloqueos por partido:</strong> ${player.bloqueosPorPartido}</p>
-                <p><strong>Robos por partido:</strong> ${player.robosPorPartido}</p>
+                <p><strong>Puntos por partido:</strong> ${player.puntosporPartido}</p>
+                <p><strong>Asistencias por partido:</strong> ${player.asistenciasporPartido}</p>
+                <p><strong>Rebotes por partido:</strong> ${player.rebotesporPartido}</p>
+                <p><strong>Bloqueos por partido:</strong> ${player.bloqueosporPartido}</p>
+                <p><strong>Robos por partido:</strong> ${player.robosporPartido}</p>
                 <p><strong>Equipo:</strong> ${team ? team.nombre : 'Desconocido'}</p>
                 <p><strong>Conferencia:</strong> ${team ? team.conferencia : 'Desconocida'}</p>
             `;
